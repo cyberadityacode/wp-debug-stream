@@ -28,45 +28,42 @@ function findWpRoot(startPath) {
 }
 
 /**
- * Enable debug logging safely (with permission)
+ * Check if debug logging is enabled (NO file modification)
  */
 async function ensureDebugEnabled(wpConfigPath) {
-  let configContent = fs.readFileSync(wpConfigPath, 'utf8');
+  const configContent = fs.readFileSync(wpConfigPath, 'utf8');
 
-  if (!configContent.includes("WP_DEBUG_LOG")) {
-    const choice = await vscode.window.showWarningMessage(
-      'WP_DEBUG_LOG not found. Enable debug logging?',
-      { modal: true },
-      'Enable',
-      'Cancel'
-    );
+  const debugEnabled =
+    configContent.includes("define('WP_DEBUG', true)") &&
+    configContent.includes("define('WP_DEBUG_LOG', true)");
 
-    if (choice !== 'Enable') {
-      return false;
-    }
-
-    const debugBlock = `
-/** Added by WP Debug Stream Extension */
-define('WP_DEBUG', true);
-define('WP_DEBUG_LOG', true);
-define('WP_DEBUG_DISPLAY', false);
-/** End WP Debug Stream Extension */
-`;
-
-    if (configContent.includes("/* That's all, stop editing! Happy publishing. */")) {
-      configContent = configContent.replace(
-        "/* That's all, stop editing! Happy publishing. */",
-        debugBlock + "\n/* That's all, stop editing! Happy publishing. */"
-      );
-    } else {
-      configContent += debugBlock;
-    }
-
-    fs.writeFileSync(wpConfigPath, configContent);
-    vscode.window.showInformationMessage('Debug logging enabled.');
+  if (debugEnabled) {
+    return true;
   }
 
-  return true;
+  const selection = await vscode.window.showWarningMessage(
+    'WP_DEBUG_LOG is not enabled. Please enable debug logging in wp-config.php to use this extension.',
+    'Open wp-config.php',
+    'Show Instructions',
+    'Cancel'
+  );
+
+  if (selection === 'Open wp-config.php') {
+    const document = await vscode.workspace.openTextDocument(wpConfigPath);
+    await vscode.window.showTextDocument(document);
+  }
+
+  if (selection === 'Show Instructions') {
+    vscode.window.showInformationMessage(
+      "Add the following lines above '/* That's all, stop editing! Happy publishing. */' in wp-config.php:\n\n" +
+      "define('WP_DEBUG', true);\n" +
+      "define('WP_DEBUG_LOG', true);\n" +
+      "define('WP_DEBUG_DISPLAY', false);",
+      { modal: true }
+    );
+  }
+
+  return false;
 }
 
 /**
@@ -85,7 +82,6 @@ function startTailStreaming(editor, logPath, context) {
     const stats = fs.statSync(logPath);
 
     if (stats.size < lastSize) {
-      // File truncated (log cleared)
       lastSize = 0;
       return;
     }
@@ -162,6 +158,9 @@ function activate(context) {
       if (!debugReady) return;
 
       if (!fs.existsSync(logPath)) {
+        vscode.window.showWarningMessage(
+          'debug.log not found. It will be created automatically when WordPress logs an error.'
+        );
         fs.writeFileSync(logPath, '');
       }
 
