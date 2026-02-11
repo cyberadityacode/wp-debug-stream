@@ -1,0 +1,53 @@
+{
+  "name": "wp-debug-stream",
+  "displayName": "WP Debug Stream",
+  "description": "Live WordPress debug log viewer with automatic wp-config setup and real-time streaming.",
+  "version": "1.0.0",
+  "publisher": "cyberadityacode",
+  "author": {
+    "name": "Aditya Dubey",
+    "url": "https://github.com/cyberadityacode"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cyberadityacode/wp-debug-stream.git"
+  },
+  "homepage": "https://github.com/cyberadityacode/wp-debug-stream",
+  "bugs": {
+    "url": "https://github.com/cyberadityacode/wp-debug-stream/issues"
+  },
+  "engines": {
+    "vscode": "^1.109.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:wpDebugStream.open"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "wpDebugStream.open",
+        "title": "WP: Open Debug Log"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.109.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "eslint": "^9.39.2",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  },
+  "license": "MIT",
+  "keywords": ["wordpress", "debug", "log", "php", "wp"],
+  "icon": "icon.png"
+}
