@@ -1,65 +1,217 @@
-# wp-debug-stream README
+<p align="center">
+  <img src="./icon.png" alt="WP Debug Stream Icon" width="128" />
+</p>
 
-This is the README for your extension "wp-debug-stream". After writing up a brief description, we recommend including the following sections.
+<h1 align="center">WP Debug Stream</h1>
 
-## Features
+<p align="center">
+  <strong>Live WordPress Debug Log Viewer for VS Code</strong><br>
+  Automatically enables debugging, detects WordPress root, and streams <code>debug.log</code> in real-time.
+</p>
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+<p align="center">
+  Built with ❤️ by <strong>Aditya Dubey</strong>
+</p>
 
 ---
 
-## Working with Markdown
+## 🚀 Overview
 
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+**WP Debug Stream** is a lightweight and powerful VS Code extension designed specifically for **WordPress plugin and theme developers**.
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
+It eliminates the repetitive task of:
 
-## For more information
+- Opening `wp-config.php`
+- Finding the `debug.log` path
+- Manually navigating to `wp-content/debug.log`
+- Refreshing the file after every error
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+Instead, it provides:
 
-**Enjoy!**
+✅ Automatic WordPress root detection  
+✅ Auto configuration of `WP_DEBUG` and `WP_DEBUG_LOG`  
+✅ Real-time streaming (like `tail -f`)  
+✅ Auto-scroll to latest error  
+✅ Works even when developing from plugin folder only
+
+---
+
+## 🎯 Why This Extension?
+
+When developing WordPress plugins or themes, debugging often requires constantly switching between files and refreshing logs.
+
+This extension solves real developer pain by:
+
+- Detecting `wp-config.php` automatically (even from `wp-content/plugins/your-plugin`)
+- Asking permission before modifying config
+- Creating `debug.log` if it doesn't exist
+- Streaming logs without reload flicker
+- Saving time during development
+
+No more manual log hunting.
+
+---
+
+## 🛠 Features
+
+### 🔍 Smart WordPress Root Detection
+
+Works whether you open:
+
+- Entire WordPress installation
+- `wp-content` folder
+- `plugins` folder
+- Individual plugin folder
+
+### ⚙ Automatic Debug Setup
+
+If debug logging is not enabled, the extension:
+
+- Prompts for permission
+- Safely inserts:
+  ```php
+  define('WP_DEBUG', true);
+  define('WP_DEBUG_LOG', true);
+  define('WP_DEBUG_DISPLAY', false);
+  ```
+
+### 📡 Real-Time Log Streaming
+
+Streams `wp-content/debug.log` live:
+
+- No full file reload
+- No flickering
+- Smooth append
+- Auto-scroll to bottom
+
+### 🧹 Lightweight & Fast
+
+- No external dependencies
+- Minimal footprint
+- Built purely with VS Code API + Node.js
+
+---
+
+## 📦 Installation
+
+### From VS Code Marketplace
+
+1. Open Extensions (`Ctrl + Shift + X`)
+2. Search for **WP Debug Stream**
+3. Click Install
+
+### Manual Installation (.vsix)
+
+```bash
+code --install-extension wp-debug-stream-0.0.1.vsix
+```
+
+---
+
+## 🚀 Usage
+
+1. Open your WordPress project (or plugin folder)
+2. Open Command Palette:
+
+```
+Ctrl + Shift + P
+```
+
+3. Run:
+
+```
+WP: Open Debug Log
+```
+
+That’s it 🎉
+
+The extension will:
+
+- Detect WordPress root
+- Enable debug logging (with permission)
+- Open `debug.log`
+- Start live streaming
+
+---
+
+## 🧠 Perfect For
+
+- WordPress Plugin Developers
+- WordPress Theme Developers
+- WooCommerce Developers
+- PHP Developers working with WordPress
+- Gutenberg Block Developers
+- React + WordPress developers
+
+---
+
+## 🔐 Safe Configuration
+
+The extension:
+
+- Never modifies files without permission
+- Inserts debug settings before:
+
+  ```
+  /* That's all, stop editing! Happy publishing. */
+  ```
+
+- Keeps your configuration clean
+
+---
+
+## 💡 Example Workflow Improvement
+
+Before:
+
+1. Trigger error
+2. Open wp-config.php
+3. Copy log path
+4. Navigate to debug.log
+5. Refresh file
+6. Repeat
+
+After:
+
+1. Trigger error
+2. Watch log update instantly 🚀
+
+---
+
+## 📈 SEO Keywords
+
+WordPress debug log viewer
+VS Code WordPress extension
+WordPress plugin debugging tool
+Live WordPress log viewer
+WordPress debug.log tail
+WordPress development tools
+PHP debugging for WordPress
+WooCommerce debugging extension
+
+---
+
+## 👨‍💻 Author
+
+**Aditya Dubey**
+GitHub: [https://github.com/cyberadityacode](https://github.com/cyberadityacode)
+
+If you find this extension useful, consider giving it a ⭐ on GitHub.
+
+---
+
+## 📜 License
+
+MIT License
+
+---
+
+## 🤝 Contributions
+
+Pull requests, feature ideas, and improvements are welcome.
+
+## ❤️ Support
+
+If this extension improves your WordPress development workflow, please share it with other developers.
+
+Happy Coding 🚀
