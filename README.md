@@ -176,21 +176,6 @@ After:
 1. Trigger error
 2. Watch log update instantly 🚀
 
----
-
-## 📈 SEO Keywords
-
-WordPress debug log viewer
-VS Code WordPress extension
-WordPress plugin debugging tool
-Live WordPress log viewer
-WordPress debug.log tail
-WordPress development tools
-PHP debugging for WordPress
-WooCommerce debugging extension
-
----
-
 ## 👨‍💻 Author
 
 **Aditya Dubey**
