@@ -17,7 +17,7 @@
     "url": "https://github.com/cyberadityacode/wp-debug-stream/issues"
   },
   "engines": {
-    "vscode": "^1.109.0"
+    "vscode": "^1.90.0"
   },
   "categories": [
     "Other"
